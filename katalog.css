@@ -1,0 +1,81 @@
+/* katalog.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.product-article {
+    display: flex; /* Użycie flexbox do układu */
+    background-color: white;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.product-image {
+    flex: 1; /* Zajmuje 1 część dostępnej przestrzeni */
+    max-width: 150px; /* Maksymalna szerokość obrazu */
+}
+
+.product-image img {
+    width: 100%; /* Obraz zajmuje całą szerokość kontenera */
+    height: auto; /* Zachowuje proporcje */
+}
+
+.product-details {
+    flex: 2; /* Zajmuje 2 części dostępnej przestrzeni */
+    padding-left: 20px; /* Odstęp od obrazu */
+}
+
+.order-button {
+    background-color: #28a745; /* Zielony kolor */
+    color: white; /* Kolor tekstu */
+    border: none; /* Bez obramowania */
+    padding: 10px 20px; /* Padding wewnętrzny */
+    cursor: pointer; /* Zmiana kursora na wskaźnik */
+    margin-top: 10px; /* Odstęp od góry */
+    border-radius: 5px; /* Zaokrąglone rogi */
+    transition: background-color 0.3s; /* Efekt przejścia */
+}
+
+.order-button:hover {
+    background-color: #218838; /* Ciemniejszy zielony przy najechaniu */
+}
+/* katalog.css */
+/* ... istniejące style ... */
+/* katalog.css */
+/* ... istniejące style ... */
+
+form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+form input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 300px; /* Szerokość pola wyszukiwania */
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Kolor przyc isku */
+    color: white; /* Kolor tekstu */
+    border: none; /* Bez obramowania */
+    border-radius: 5px; /* Zaokrąglone rogi */
+    cursor: pointer; /* Zmiana kursora na wskaźnik */
+}
+
+form button:hover {
+    background-color: #0056b3; /* Ciemniejszy niebieski przy najechaniu */
+}
