@@ -5,15 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cukiernia</title>
     <link rel="stylesheet" href="katalog.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
 </head>
 <body>
-    <h1>Cukiernia</h1>
+<header>
+    <img class='rounded float-start' src="zdjecia/logo.png"  alt="logo cukierni Słodzik">
 
-    <form method="GET" action="">
-        <input type="text" name="search" placeholder="Wyszukaj produkty..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
-        <button type="submit">Szukaj</button>
+    <form  method="GET" action="">
+        <select name="filtr" id="filtr" class="form-select" aria-label="Default select example">
+            <option value="brak">Brak</option>
+            <option value="torty">Torty</option>
+            <option value="ciasta">Ciasta</option>
+            <option value="ciasteczka">Ciasteczka</option>
+        </select>
+        <input class = "form-control" type="text" name="search" id="wysz" placeholder="Wyszukaj produkty..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+        <button class="btn btn-dark" id="sub" type="submit">Szukaj</button>
     </form>
-
+    <nav id="nav" class="navbar">
+    <ul id="nav-con" class="nav justify-content-end nav-pills">
+  <li id="nav-item" class="nav-item">
+    <a id="nav-link" class="nav-link active" aria-current="page" href="Katalog.php">Katalog</a>
+  </li>
+  <li id="nav-item" class="nav-item">
+    <a id="nav-link" class="nav-link " href="index.php">Strona Główna</a>
+  </li>
+  <li id="nav-item" class="nav-item">
+    <a id="nav-link" class="nav-link" href="profil.php">Profil</a>
+  </li>
+</ul>
+</nav>
+</header>
+<main>
     <?php
 
     // Połączenie z bazą danych
@@ -29,10 +52,28 @@
         global $conn;
 
         // Przygotowanie zapytania z wyszukiwaniem
-        $sql = "SELECT * FROM produkty";
-        if ($search) {
-            $search = $conn->real_escape_string($search);
-            $sql .= " WHERE nazwa LIKE '%$search%' OR skladniki LIKE '%$search%'";
+        $sql = "SELECT produkty.* FROM produkty join kategorieproduktow on produkty.idKP = kategorieproduktow.idKP";
+        $kat = false;
+        $filtr = 'brak';
+        if (isset($_GET['filtr'])) {
+            $filtr = $_GET['filtr'];
+        }
+        if ($filtr === "brak") {
+            $kat = false;
+        } else{
+            $sql .= " WHERE kategorieproduktow.nazwa = '$filtr'";
+            $kat = true;
+        }
+        if ($kat){
+            if ($search) {
+                $search = $conn->real_escape_string($search);
+                $sql .= " and (produkty.nazwa LIKE '%$search%' OR skladniki LIKE '%$search%')";
+            }
+        } else {
+            if ($search) {
+                $search = $conn->real_escape_string($search);
+                $sql .= " WHERE produkty.nazwa LIKE '%$search%' OR skladniki LIKE '%$search%'";
+            }
         }
         $result = $conn->query($sql);
 
@@ -40,22 +81,27 @@
         while ($row = $result->fetch_assoc()) {
             echo "<article class='product-article'>";
             echo "<div class='product-image'>";
-            echo "<img src='" . $row["zdjecie"] . "' alt='" . $row["nazwa"] . "'>";
+            echo "<img class='rounded float-start' src='zdjecia/" . $row["zdjecie"] . "' alt='" . $row["nazwa"] . "'>";
             echo "</div>";
             echo "<div class='product-details'>";
             echo "<h2>" . $row["nazwa"] . "</h2>";
             echo "<p>Cena: " . $row["cena"] . " zł</p>";
             echo "<p>Składniki: " . $row["skladniki"] . "</p>";
             echo "<p>Wartość odżywcza: " . $row["wartosc_odzywcza"] . "</p>";
-            echo "<button class='order-button'>Zamów</button>"; // Przycisk zamówienia
+            echo "<button class='btn btn-success'>Zamów</button>";
             echo "</div>";
             echo "</article>";
         }
     }
-
     // Sprawdzenie, czy wyszukiwano
     $search = isset($_GET['search']) ? $_GET['search'] : '';
     wyswietlKatalog($search);
     ?>
+    </main>
+    <footer>
+
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </body>
 </html>
