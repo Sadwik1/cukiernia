@@ -22,6 +22,7 @@ header{
     padding-left: 1vw;
     padding-right: 1vw;
     border: 1px solid #ddd;
+    justify-content: space-between;
 }
 img{
     width: 20%;
