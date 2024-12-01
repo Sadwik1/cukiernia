@@ -1,0 +1,146 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    padding-top: 1vh;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    width: 30%;
+}
+header{
+    display: flex;
+    flex-direction: row;
+    height: 20vh;
+    padding-bottom: 3vh;
+    padding-top: 3vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    border: 1px solid #ddd;
+    justify-content: space-between;
+}
+img{
+    width: 20%;
+    height: 100%;
+}
+.product-article {
+    display: flex;
+    background-color: white;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 1vw;
+}
+
+.product-image {
+    width: 20%;
+}
+
+.product-image img {
+    width: 100%; 
+    height: 25vh; 
+}
+
+.product-details {
+    flex: 2;
+    padding-left: 1vw; 
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    width: 40%;
+    height: 5vh;
+    align-self: center;
+    margin-bottom: 5vh;
+}
+
+#wysz{
+    margin-right: 1vw;
+    width: 14vw;
+}
+#filtr{
+    margin-right: 1vw;
+    width: 7vw; 
+}
+#nav{
+    width: 40%;
+    height: 10vh;
+    padding-right: 1vw;
+    padding-left: 1vw;
+    padding-bottom: 1vh;
+    padding-top: 1vh;
+    margin-bottom: 5vh;
+    border: 1px solid #ddd;
+    align-self: center;
+    border-radius: 5px;
+}
+#nav-con{
+    width: 100%;
+}
+#nav-item{
+    width: 30%;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+#nav-link{
+    border: 1px solid #ddd;
+    height: 100%;
+    width: 100%;
+    color: #5e5e5e;
+    font-size: 2vh;
+    text-align: center;
+}
+#nav-link:hover{
+background-color: #000000;
+color: #ddd;
+}
+#nav-link.active{
+    border: 1px solid #ddd;
+    height: 100%;
+    width: 100%;
+    color: #ffffff;
+    font-size: 2vh;
+    text-align: center;
+    background-color: #5e5e5e;
+}
+#nav-link.active:hover{
+    background-color: #000000;
+}
+#profilMain{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 5vh;
+}
+#aside{
+    width: 20%;
+    display: flex;
+flex-direction: column;
+margin-left: 5vw;
+margin-right: 5vw;
+}
+#article{
+    width: 60%;
+    display: flex;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    flex-direction: column;
+}
+p{
+    font-size: 2vh;
+}
+#wyloguj{
+    font-size: 2vh;
+    margin-top: 3vh;
+    height: 5vh;
+}
+#card{
+    margin-top: 1vh;
+}
