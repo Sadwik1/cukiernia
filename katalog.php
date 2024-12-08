@@ -52,7 +52,7 @@
         global $conn;
 
         // Przygotowanie zapytania z wyszukiwaniem
-        $sql = "SELECT produkty.* FROM produkty join kategorieproduktow on produkty.idKP = kategorieproduktow.idKP";
+        $sql = "SELECT produkty.*, promocje.*, produkty.zdjecie as zdj, produkty.nazwa as naz FROM produkty left join promocje on produkty.idP = promocje.idP join kategorieproduktow on produkty.idKP = kategorieproduktow.idKP WHERE promocje.idPR is null or (promocje.data_rozpoczecia <= NOW() AND promocje.data_zakonczenia >= NOW())";
         $kat = false;
         $filtr = 'brak';
         if (isset($_GET['filtr'])) {
@@ -61,7 +61,7 @@
         if ($filtr === "brak") {
             $kat = false;
         } else{
-            $sql .= " WHERE kategorieproduktow.nazwa = '$filtr'";
+            $sql .= " and kategorieproduktow.nazwa = '$filtr'";
             $kat = true;
         }
         if ($kat){
@@ -69,23 +69,28 @@
                 $search = $conn->real_escape_string($search);
                 $sql .= " and (produkty.nazwa LIKE '%$search%' OR skladniki LIKE '%$search%')";
             }
-        } else {
-            if ($search) {
-                $search = $conn->real_escape_string($search);
-                $sql .= " WHERE produkty.nazwa LIKE '%$search%' OR skladniki LIKE '%$search%'";
-            }
         }
+        //  else {
+        //     if ($search) {
+        //         $search = $conn->real_escape_string($search);
+        //         $sql .= " and produkty.nazwa LIKE '%$search%' OR skladniki LIKE '%$search%'";
+        //     }
+        // }
         $result = $conn->query($sql);
 
         // Wyświetlenie produktów jako artykuły
+        $cena = 0;
+        $znizka = 0;
         while ($row = $result->fetch_assoc()) {
+            $cena = $row["cena"];
+            $znizka = $row["znizka"];
             echo "<article class='product-article'>";
             echo "<div class='product-image'>";
-            echo "<img class='rounded float-start' src='zdjecia/" . $row["zdjecie"] . "' alt='" . $row["nazwa"] . "'>";
+            echo "<img class='rounded float-start' src='zdjecia/" . $row["zdj"] . "' alt='" . $row["naz"] . "'>";
             echo "</div>";
             echo "<div class='product-details'>";
-            echo "<h2>" . $row["nazwa"] . "</h2>";
-            echo "<p>Cena: " . $row["cena"] . " zł</p>";
+            echo "<h2>" . $row["naz"] . "</h2>";
+            echo "<p>Cena: " . round($cena-($cena*$znizka), 2) . " zł</p>";
             echo "<p>Składniki: " . $row["skladniki"] . "</p>";
             echo "<p>Wartość odżywcza: " . $row["wartosc_odzywcza"] . "</p>";
             echo "<button class='btn btn-success'>Zamów</button>";
