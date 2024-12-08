@@ -13,8 +13,15 @@ h1 {
     color: #333;
     width: 30%;
 }
+
 section{
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+section h2 {
+    width: 100%;
 }
 header{
     display: flex;
@@ -47,7 +54,6 @@ img{
     width: 100%; 
     height: 25vh; 
 }
-
 .product-details {
     flex: 2;
     padding-left: 1vw; 
@@ -165,4 +171,54 @@ p{
     height: 5vh;
     align-self: center;
     margin-bottom: 5vh;
+}
+.popular-article {
+    display: flex;
+    background-color: white;
+    border: 1px solid #ddd;
+    margin: 1vh 1vw 1vh 1vw;
+    padding: 1vw;
+    width: 45%;
+}
+
+.popular-image {
+    width: 20vw;
+}
+
+    .popular-image img {
+        width: 100%;
+        height: 25vh;
+
+    }
+
+.popular-details {
+    flex: 2;
+    padding-left: 1vw;
+}
+.promotion-article {
+    display: flex;
+    background-color: white;
+    border: 1px solid #ddd;
+    margin: 1vh 1vw 1vh 1vw;
+    padding: 1vw;
+    width: 45%;
+}
+
+.promotion-image {
+    width: 20vw;
+}
+
+    .promotion-image img {
+        width: 100%;
+        height: 25vh;
+    }
+
+.promotion-details {
+    flex: 2;
+    padding-left: 1vw;
+}
+#dodaj_op{
+    height: 4vh;
+    padding: 1vh;
+    margin-left: 1vw;
 }

@@ -33,10 +33,8 @@
 <main>
     
 
-    <section class="popular-products">
-        <div class="container">
+    <section>
             <h2 class="text-center">Popularne Produkty</h2>
-            <div class="row">
                 <?php
                 // Połączenie z bazą danych
                 $conn = new mysqli("localhost", "root", "", "cukiernia");
@@ -51,61 +49,63 @@
                     global $conn;
 
                     // Przygotowanie zapytania do pobrania popularnych produktów
-                    $sql = "SELECT * FROM produkty ORDER BY RAND() LIMIT 2"; // Wybieramy 3 losowe produkty
+                    $sql = "SELECT produkty.*, promocje.*, produkty.zdjecie as zdj, produkty.nazwa as naz FROM produkty left join promocje on produkty.idP = promocje.idP join kategorieproduktow on produkty.idKP = kategorieproduktow.idKP WHERE promocje.idPR is null or (promocje.data_rozpoczecia <= NOW() AND promocje.data_zakonczenia >= NOW()) ORDER BY RAND() LIMIT 2"; // Wybieramy 3 losowe produkty
                     $result = $conn->query($sql);
 
                     // Wyświetlenie produktów jako artykuły
                     while ($row = $result->fetch_assoc()) {
-                        echo "<div id='pop' class='col-md-4'>";
-                        echo "<img id='popzdj' class='rounded' src='zdjecia/" . $row["zdjecie"] . "' alt='" . $row["nazwa"] . "'>";
-                        echo "<div>";
-                        echo "<h3>" . $row["nazwa"] . "</h3>";
-                        echo "<p>Cena: " . $row["cena"] . " zł</p>";
-                        echo "<button class='btn btn-success'>Zamów</button>";
-                        echo "</div>";
-                        echo "</div>";
+                        $cena = $row["cena"];
+            $znizka = $row["znizka"];
+            echo "<article class='popular-article'>";
+            echo "<div class='popular-image'>";
+            echo "<img class='rounded float-start' src='zdjecia/" . $row["zdj"] . "' alt='" . $row["naz"] . "'>";
+            echo "</div>";
+            echo "<div class='popular-details'>";
+            echo "<h2>" . $row["naz"] . "</h2>";
+            echo "<p>Cena: " . round($cena-($cena*$znizka), 2) . " zł</p>";
+            echo "<p>Składniki: " . $row["skladniki"] . "</p>";
+            echo "<p>Wartość odżywcza: " . $row["wartosc_odzywcza"] . "</p>";
+            echo "<button class='btn btn-success'>Zamów</button>";
+            echo "</div>";
+            echo "</article>";
                     }
                 }
 
                 // Wywołanie funkcji do wyświetlenia popularnych produktów
                 wyswietlPopularneProdukty();
                 ?>
-            </div>
-        </div>
     </section>
 
-    <section class="promotions">
-        <div class="container">
+    <section>
             <h2 class="text-center">Aktualne Promocje</h2>
-            <div class="row">
                 <?php
-                // Funkcja wyświetlająca aktualne promocje
-                // function wyswietlPromocje() {
-                //     global $conn;
+                 function wyswietlPromocje() {
+                     global $conn;
 
-                //     $sql = "SELECT * FROM promocje WHERE data_rozpoczecia <= NOW() AND data_zakonczenia >= NOW()";
-                //     $result = $conn->query($sql);
+                     $sql = "SELECT produkty.*, promocje.*, produkty.zdjecie as zdj, produkty.nazwa as naz FROM produkty left join promocje on produkty.idP = promocje.idP join kategorieproduktow on produkty.idKP = kategorieproduktow.idKP WHERE promocje.data_rozpoczecia <= NOW() AND promocje.data_zakonczenia >= NOW()";
+                     $result = $conn->query($sql);
 
-                //     while ($row = $result->fetch_assoc()) {
-                //         echo "<div class='col-md-4'>";
-                //         echo "<article class='promotion-article'>";
-                //         echo "<div class='promotion-image'>";
-                //         echo "<img class='rounded' src='zdjecia/" . $row["zdjecie"] . "' alt='" . $row["nazwa"] . "'>";
-                //         echo "</div>";
-                //         echo "<div class='promotion-details'>";
-                //         echo "<h3>" . $row["nazwa"] . "</h3>";
-                //         echo "<p>" . $row["opis"] . "</p>";
-                //         echo "<p>Rabaty: " . $row["rabaty"] . "%</p>";
-                //         echo "</div>";
-                //         echo "</article>";
-                //         echo "</div>";
-                //     }
-                // }
+                     while ($row = $result->fetch_assoc()) {
+                         $cena = $row["cena"];
+                         $znizka = $row["znizka"];
+                         echo "<article class='promotion-article'>";
+                         echo "<div class='promotion-image'>";
+                         echo "<img class='rounded' src='zdjecia/" . $row["zdj"] . "' alt='" . $row["naz"] . "'>";
+                         echo "</div>";
+                         echo "<div class='promotion-details'>";
+                         echo "<h3>" . $row["naz"] . "</h3>";
+                         echo "<p>Cena: " . round($cena-($cena*$znizka), 2) . " zł</p>";
+                         echo "<p>Składniki: " . $row["skladniki"] . "</p>";
+                         echo "<p>Wartość odżywcza: " . $row["wartosc_odzywcza"] . "</p>";
+                         echo "<p>Rabaty: " . $znizka*100 . "%</p>";
+                         echo "<button class='btn btn-success'>Zamów</button>";
+                         echo "</div>";
+                         echo "</article>";
+                     }
+                 }
 
-                // wyswietlPromocje();
+                 wyswietlPromocje();
                 ?>
-            </div>
-        </div>
     </section>
 </main>
 <footer class="text-center">
