@@ -33,7 +33,6 @@
                     </div>
                     <a href="rejestracja.php" class="text-muted text-decoration-none">Nie masz konta?</a>
                     <br>
-                    <a href="reset_haslo.php" class="text-muted text-decoration-none">Zapomniałeś hasła?</a>
                 </form>
                 <?php
                 ob_start();
