@@ -222,3 +222,10 @@ p{
     padding: 1vh;
     margin-left: 1vw;
 }
+#margin_kup_form{
+    margin: 1% 1% 1% 1%;
+}
+#margin_kup_form_but {
+    margin: 1% 1% 1% 1%;
+    width: 13vw;
+}

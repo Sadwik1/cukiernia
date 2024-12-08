@@ -122,19 +122,30 @@
             echo "<input type='hidden' name='idP' value='$idP'>";
             echo "<button id='dodaj_op' class='btn btn-primary mt-2' type='submit'>Dodaj</button>";
             echo "</form>";
-
-            echo "<button  class='btn btn-success mt-2'>Zamów</button>";
+            if (!isset($_SESSION)) {
+                session_start();
+            }
+            if (isset($_SESSION['zalogowany'])) {
+                if ($_SESSION['zalogowany'] == true) {
+                    $_SESSION['idP'] = $idP;
+                    echo "<a href='kup.php' class='btn btn-success mt-2'>Zamów</a>";
+                } 
+            } else {
+                echo "<a href='logowanie.php' class='btn btn-success mt-2'>Zaloguj się, aby zamówić</a>";
+            }
             echo "</div>";
             echo "</article>";
         }
-    }
+}
+            
 
     // Sprawdzenie, czy wyszukiwano
     $search = isset($_GET['search']) ? $_GET['search'] : '';
     wyswietlKatalog($search);
     ?>
 </main>
-<footer>
+<footer class="text-center mt-4">
+    <p>&copy; 2024 Cukiernia Slodzik</p>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

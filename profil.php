@@ -112,5 +112,8 @@ if ($_SESSION["zalogowany"] == false or !isset($_SESSION["zalogowany"])) {
 
   
 </main>
+<footer class="text-center mt-4">
+    <p>&copy; 2024 Cukiernia Slodzik</p>
+</footer>
 </body>
 </html>
